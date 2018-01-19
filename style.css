@@ -1,0 +1,12 @@
+#test {
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: rgb(245, 241, 241);
+}
+#results li.pass {
+  color: green;
+}
+#results li.fail {
+  color: red;
+}
