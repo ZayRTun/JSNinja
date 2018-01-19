@@ -53,17 +53,68 @@
 
 
 //Invocation as a function
-function ninja() {
-  return this;
-}
-function samurai() {
-  "use strict";
-  return this;
-}
-assert(ninja() === window, "Assert A: in a nonstrict mode ninja function the context is the global window object");
-assert(samurai() === undefined, "Assert B: in a strict mode samurai function the context is not the global window object, its undefined");
+// function ninja() {
+//   return this;
+// }
+// function samurai() {
+//   "use strict";
+//   return this;
+// }
+// assert(ninja() === window, "Assert A: in a nonstrict mode ninja function the context is the global window object");
+// assert(samurai() === undefined, "Assert B: in a strict mode samurai function the context is not the global window object, its undefined");
 
 
+//Invocation as a method
+// var ninja = {};
+// ninja.skulk = function() {return this};
+// assert(ninja.skulk() === ninja, "contaxt is ninja object");
+
+// function whatsMyContext() {
+//   return this;
+// }
+// assert(whatsMyContext() === window, "function call on window");
+
+// var getMyThis = whatsMyContext;
+// assert(getMyThis() === window, "another func call in window");
+
+// var ninja1 = {
+//   getMyThis: whatsMyContext
+// };
+// assert(ninja1.getMyThis() === ninja1, "working with 1st ninja");
+
+// var ninja2 = {
+//   getMyThis: whatsMyContext
+// };
+// assert(ninja2.getMyThis() === ninja2, "working with 2nd ninja");
+
+
+//Invoking function as a constructor **
+// function Ninja() {
+//   this.skulk = function() {
+//     return this;
+//   };
+//   return 1;
+// }
+// var ninja1 = new Ninja();
+// var ninja2 = new Ninja();
+// assert(ninja1.skulk() === ninja1, '1st ninja is skulking');
+// assert(ninja2.skulk() === ninja2, "2nd ninja is skulking too")
+// assert(Ninja() === 1, "calling the func as function")
+// assert(typeof ninja1 === 'object', 'ninja1 is an object')
+
+// var puppet = {
+//   rules: false
+// };
+// function Emperor() {
+//   this.rules = true;
+//   return puppet;
+// }
+// var emperor = new Emperor();
+// assert(emperor === puppet, "the emp is a puppet");
+// assert(emperor.rules === false, "the puppet does not know how to rule");
+
+
+//Invocation with apply and call
 
 
 
