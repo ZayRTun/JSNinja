@@ -115,15 +115,189 @@
 
 
 //Invocation with apply and call
+// function Button() {
+//   this.clicked = false;
+//   this.click = function() {
+//     this.clicked = true;
+//     assert(button.clicked, "the btn has been clicked");
+//   };
+// }
+// var button = new Button();
+// var elem = document.getElementById("btn");
+// elem.addEventListener("click", button.click);
+
+// function juggle() {
+//   var result = 0;
+//   for (var i = 0; i < arguments.length; i++) {
+//     result += arguments[i];
+//   }
+//   this.result = result;
+// }
+// var ninja1 = {};
+// var ninja2 = {};
+// juggle.apply(ninja1, [1,2,3,4]);
+// juggle.call(ninja2, 5,6,7,8);
+// assert(ninja1.result === 10, "juggled via apply")
+// assert(ninja2.result === 26, "juggled via call")
 
 
+//Building a forEach function to demonstrate setting a function context
+// function forEach(list, callback) {
+//   for (var n = 0; n < list.length; n++) {
+//     callback.call(list[n], n);
+//   }
+// }
+// var weapons = [
+//   {type: 'shuriken'},
+//   {type: 'katana'},
+//   {type: 'nunchucks'}
+// ];
+// forEach(weapons,function(index) {
+//   assert(this === weapons[index], "Got the expected value of " + weapons[index].type)
+// });
+// var foods = [
+//   {type: 'noodle'},
+//   {type: 'friedRice'},
+//   {type: 'hotpot'}
+// ];
+
+// function forEach(listofObj, callback) {
+//   for (var i = 0; i < listofObj.length; i++) {
+//     callback.call(listofObj[i], i);
+//   }
+// };
+// forEach(foods, function(index) {
+//   assert(this === foods[index], "the context is object: " + foods[index].type)
+// })
 
 
+//Arrow functions to work around callback function contexts
+// function Button() {
+//   this.clicked = false;
+//   this.click = () => {
+//     this.clicked = true;
+//     assert(button.clicked, "the button has been clicked!");
+//   }
+// }
+// var button = new Button();
+// var elem = document.getElementById('btn');
+// elem.addEventListener('click', button.click);
 
 
+//Arrow functions and object literals
+// assert(this === window, 'this is === window');
+// var button = {
+//   clicked : false,
+//   click : () => {
+//     this.clicked = true;
+//     assert(button.clicked, 'the button has been clicked');
+//     assert(this === window, 'the function context is the window');
+//     assert(window.clicked, 'the click is store in the window');
+//   }
+// }
+// var elem = document.getElementById('btn');
+// elem.addEventListener('click', button.click);
 
 
+//Using the bind method
+// var button = {
+//     clicked : false,
+//     click : function() {
+//       this.clicked = true;
+//       assert(button.clicked, 'the button has been clicked');
+//       assert(this === window, 'the function context is the window');
+//       assert(window.clicked, 'the click is store in the window');
+//     }
+//   }
+// var elem = document.getElementById('btn');
+// elem.addEventListener('click', button.click.bind(button));
+// var boundFunctions = button.click.bind(button);
+// assert(boundFunctions != button.click, "calling bind creates a completely new function");
 
+
+//Exercises
+  //rest parameters
+// function sum(...restArg) {
+//   var sum = 0;
+//   for (var i = 0; i < restArg.length; i++) {
+//     sum += restArg[i];
+//   }
+//   return sum;
+// }  
+// assert(sum(1,2,3) === 6, "passing in 3 arg using rest parameter");
+
+//Exercises 2
+// function getSamurai(samurai) {
+//   "use strict";
+//   arguments[0] = "Ishida";
+//   return samurai;
+// }
+// function getNinja(ninja) {
+//   arguments[0] = "Fuma";
+//   return ninja;
+// }
+// var samurai = getSamurai("Toyotomi");
+// assert(samurai === "Toyotomi", "samurai is Toyotomi");
+// var ninja = getNinja("Yoshi");
+// assert(ninja === "Fuma", "ninja is Fuma");
+
+//Exercise 3
+// function whoAmI1() {
+//   "use strict";
+//   return this;
+// }
+// function whoAmI2() {
+//   return this;
+// }
+// assert(whoAmI1() === window, "will not pass due to strict mode")
+// assert(whoAmI2() === window, "will pass cause not in strict mode");
+
+//Exercise 4
+// var ninja1 = {
+//   whoAmI : function() {
+//     return this;
+//   }
+// }
+// var ninja2 = {
+//   whoAmI : ninja1.whoAmI
+// }
+// var identify = ninja2.whoAmI;
+// assert(ninja1.whoAmI() === ninja1, "this will pass as a method of ninja1");
+// assert(ninja2.whoAmI() === ninja1, "this will fail cause the func belongs to ninja2 obj now");
+// assert(identify() === ninja1, "this fails cause the identity is assigned object ninja2");
+// assert(ninja1.whoAmI.call(ninja2) === ninja2, "this passes cause we are using the function call method");
+// console.log(ninja1.whoAmI.call(ninja2))
+
+//Exercise 5
+// function Ninja() {
+//   this.whoAmI = () => this;
+// }
+// var ninja1 = new Ninja();
+// var ninja2 = {
+//   whoAmI: ninja1.whoAmI
+// };
+// assert(ninja1.whoAmI() === ninja1, 'this passes cause arrow funcs inherits its contexts');
+// assert(ninja2.whoAmI() === ninja1, 'this do not pass cause of arrow function inheritance');
+
+//Exercise 6
+// function Ninja() {
+//   this.whoAmI = function() {
+//     return this;
+//   }
+// }
+// var ninja1 = new Ninja();
+// var ninja2 = {
+//   whoAmI: ninja1.whoAmI
+// };
+// assert(ninja1.whoAmI() === ninja1, 'this passes cause arrow funcs inherits its contexts');
+// assert(ninja2.whoAmI() === ninja2, 'this passes');
+
+
+//Test
+// var elem = document.getElementById("divBtn");
+// elem.addEventListener("click", function() {
+//   this.style.backgroundColor = "red";
+// });
 
 
 
